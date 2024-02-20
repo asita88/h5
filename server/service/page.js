@@ -19,7 +19,7 @@ module.exports = (app) => ({
 
     return $model.Page.findAll({
       where: query,
-      attributes: ["id", "title", "coverImage", "isPublish"],
+      attributes: ["id", "pageId", "title", "coverImage", "isPublish"],
     });
   },
 
@@ -67,7 +67,7 @@ module.exports = (app) => ({
     }
     return await $model.Page.findAll({
       where: query,
-      attributes: ["id", "title", "coverImage"],
+      attributes: ["id", "pageId", "title", "coverImage"],
     });
   },
 
@@ -114,7 +114,15 @@ module.exports = (app) => ({
     const { $model } = app;
     return await $model.Page.findByPk(id);
   },
-
+  /**
+   * 获取页面详情
+   * @param pageId
+   * @returns {Promise<*>}
+   */
+  async getPageDetailByPageId(pageId) {
+    const { $model } = app;
+    return await $model.Page.findOne({where: { pageId: pageId }});
+  },
   /**
    * 发布页面
    * @param id

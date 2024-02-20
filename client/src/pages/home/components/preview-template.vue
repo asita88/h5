@@ -1,6 +1,6 @@
 <template>
   <previewWrapper
-    :pageId="pageId"
+    :pageId="pageData.pageId"
     :width="pageData.width"
     :height="pageData.height"
     @closePreview="closePreview"
@@ -17,7 +17,7 @@
             <el-button type="primary" @click="doCopy">复制链接</el-button>
           </div>
           <div class="share-wx-config-wrapper">
-            {{ $config.baseURL + "/quark/view/" + pageId }}
+            {{ $config.baseURL + "/view/" + this.pageData.pageId }}
           </div>
         </el-form-item>
         <!--页面效果-->
@@ -55,13 +55,17 @@ export default {
     QrcodeVue,
   },
   props: {
-    pageId: Number,
+    id: Number,
   },
   data() {
     return {
       loading: true,
-      defaultCoverImage: require("@/common/images/quark--pagecover-image.png"),
-      pageData: {},
+      defaultCoverImage: require("@/common/images/h5--pagecover-image.png"),
+      pageData: {
+        pageId: "",
+        width: 0,
+        height: 0,
+      },
     };
   },
   created() {
@@ -69,7 +73,7 @@ export default {
   },
   computed: {
     pageLink() {
-      return this.$config.baseURL + "/quark/view/" + this.pageId;
+      return this.$config.baseURL + "/view/" + this.pageData.pageId;
     },
     shareData() {
       if (!this.pageData.shareConfig) {
@@ -100,7 +104,7 @@ export default {
     getData() {
       this.loading = true;
       this.$API
-        .getPageDetail({ pageId: this.pageId })
+        .getPageDetail({ id: this.id })
         .then((res) => {
           this.loading = false;
           this.pageData = res.body;

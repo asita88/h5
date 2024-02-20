@@ -56,7 +56,7 @@ export default {
     return {
       loading: false,
       dialogVisible: false,
-      defaultCoverImage: require("@/common/images/quark--pagecover-image.png"),
+      defaultCoverImage: require("@/common/images/h5--pagecover-image.png"),
       option: {
         img: "",
         outputSize: 1, //剪切后的图片质量（0.1-1）
@@ -80,7 +80,7 @@ export default {
         let params = new FormData();
         params.append("file", file);
         this.$API
-          .uploadCommonImage(params)
+          .uploadImage(params)
           .then((res) => {
             this.loading = false;
             this.dialogVisible = false;

@@ -25,4 +25,17 @@ module.exports = (app) => ({
       url: url,
     });
   },
+
+  /**
+   * 添加图片
+   * @param url
+   * @returns {Promise<*>}
+   */
+  async delImage(id) {
+    const { ctx, $model } = app;
+    let userData = ctx.userData;
+    return await $model.Image.destroy({
+      where: { author: userData.id, id: id },
+    });
+  },
 });

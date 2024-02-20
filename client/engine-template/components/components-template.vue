@@ -1,8 +1,8 @@
 <template>
-  <div class="quark-element-wrapper" @click="handleClick">
+  <div class="h5-element-wrapper" @click="handleClick">
     <component
       :is="element.elName"
-      class="quark-element"
+      class="h5-element"
       v-bind="element.propsValue"
     />
   </div>

@@ -51,7 +51,7 @@
     <!--预览-->
     <previewPage
       v-if="showPreview"
-      :pageId="previewId"
+      :id="previewId"
       @closePreview="showPreview = false"
     ></previewPage>
   </div>

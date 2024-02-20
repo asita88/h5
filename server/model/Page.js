@@ -7,9 +7,17 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
+      pageId: {
+        type: DataTypes.STRING,
+        defaultValue: "",
+      },
       title: {
         type: DataTypes.STRING,
-        defaultValue: "未命名场景",
+        defaultValue: "whatsapp",
+      },
+      tip: {
+        type: DataTypes.STRING,
+        defaultValue: "",
       },
       coverImage: {
         type: DataTypes.STRING,

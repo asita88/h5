@@ -10,7 +10,7 @@
         }"
       >
         <iframe
-          :src="$config.baseURL + '/quark/view/' + pageId"
+          :src="$config.baseURL + '/view/' + pageId"
           frameborder="0"
           style="background-color: transparent; width: 100%; height: 100%"
         ></iframe>

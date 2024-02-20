@@ -11,7 +11,7 @@
         >
           <!--页面内容区域-->
           <div
-            class="quark-page-wrapper"
+            class="h5-page-wrapper"
             :style="
               getCommonStyle(
                 {
@@ -67,7 +67,7 @@ export default {
   created() {
     let pageData = window._pageData;
     console.log($config.canvasH5Width);
-    console.log(this.pageData.width);
+    console.log(pageData.width);
     // this.scalingRatio = document.body.clientWidth / $config.canvasH5Width;
     this.scalingRatio = document.body.clientWidth / pageData.width;
     this.pageTop =

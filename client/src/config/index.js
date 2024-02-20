@@ -4,10 +4,10 @@
 
 const configDict = {
   development: {
-    baseURL: "http://localhost:4000",
+    baseURL: "http://localhost:4000/h5",
   },
   production: {
-    baseURL: "http://localhost:4000",
+    baseURL: "http://localhost:4000/h5",
   },
 };
 

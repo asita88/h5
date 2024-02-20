@@ -94,7 +94,7 @@ export default {
   data() {
     return {
       loading: false,
-      defaultCoverImage: require("@/common/images/quark--pagecover-image.png"),
+      defaultCoverImage: require("@/common/images/h5--pagecover-image.png"),
       operationDataList: [
         {
           title: "发布",
@@ -179,6 +179,7 @@ export default {
     // 新建页面
     newPage() {
       let newPageData = editorProjectConfig.getProjectConfig();
+      newPageData.pageMode = this.pageType;
       this.loading = true;
       this.$API
         .createPage({ ...newPageData })

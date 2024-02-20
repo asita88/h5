@@ -17,7 +17,7 @@
         <imageSelect :url.sync="activePage.commonStyle.backgroundImage" />
       </div>
     </div>
-    <p class="page-title fontBold">全局样式</p>
+    <p class="page-title fontBold">全局配置</p>
     <div class="attr-item-edit-wrapper">
       <p class="attr-item-title">尺寸：</p>
       <div class="col-2 attr-item-edit-input">
@@ -39,12 +39,31 @@
         <div class="attr-item-edit-input-des">高度</div>
       </div>
     </div>
+    <div class="attr-item-edit-wrapper">
+      <p class="attr-item-title">页面模式</p>
+      <div class="col-2 attr-item-edit-input">
+        <el-select
+          size="mini"
+          v-model="projectData.pageMode"
+          placeholder="请选择"
+        >
+          <el-option
+            v-for="item in pageModeList"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
+      </div>
+    </div>
   </el-scrollbar>
 </template>
 
 <script>
 import { mapState, mapGetters } from "vuex";
 import imageSelect from "@/components/image-select";
+
 export default {
   components: {
     imageSelect,
@@ -61,6 +80,14 @@ export default {
       "activeElement",
       "activePage",
     ]),
+  },
+  data() {
+    return {
+      pageModeList: [],
+    };
+  },
+  created() {
+    this.pageModeList = this.$config.pageModeList;
   },
 };
 </script>

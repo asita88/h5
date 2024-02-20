@@ -71,10 +71,10 @@ function initService(app) {
 //初始化model
 function initModel(app) {
   const crypto = require("crypto");
-  //改成用sequelize
+  // 改成用sequelize
   // const sequelize = new Sequelize({
   //   dialect: "sqlite",
-  //   storage: "sqliteDb.db",
+  //   storage: "h5.db",
   // });
   const sequelize = new Sequelize(
     app.$config.sequelize.database,
@@ -82,7 +82,6 @@ function initModel(app) {
     app.$config.sequelize.password,
     app.$config.sequelize.options
   );
-
   // app上扩展两个属性
   app.$sequelize = sequelize;
   app.$db = sequelize;

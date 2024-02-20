@@ -5,8 +5,9 @@
   "scripts": {
     "dev-client": "vue-cli-service serve",
     "dev": "npm run dev-client",
-    "build-client": "vue-cli-service build",
-    "lib:h5-swiper": "vue-cli-service build --target lib --name page-engine --dest ../server/public/engine_libs/h5-swiper engine-template/engine-h5-swiper/index.js"
+    "build-client": "vue-cli-service build --dest ../server/public/wspage",
+    "lib:h5-swiper": "vue-cli-service build --target lib --name page-engine --dest ../server/public/engine_libs/h5-swiper engine-template/engine-h5-swiper/index.js",
+    "lib:h5-long": "vue-cli-service build --target lib --name page-engine --dest ../server/public/engine_libs/h5-long engine-template/engine-h5-long/index.js"
   },
   "dependencies": {
     "ali-oss": "^6.1.1",

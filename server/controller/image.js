@@ -26,5 +26,13 @@ module.exports = app => ({
 		let fileResult = await $service.file.upload(file, 'image_lib/' + userData.username + '/' + timestamps);
 		const imageData = await $service.image.addImage(fileResult.url);
 		$helper.returnBody(true, imageData)
-	}
+	},
+
+	async deleteImage(){
+		const { ctx, $service, $helper } = app;
+		const { id } = ctx.request.body;
+		await $service.image.delImage(id);
+		const imageList = await $service.image.getMyImages();
+		$helper.returnBody(true, imageList)
+	},
 })

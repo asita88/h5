@@ -1,14 +1,14 @@
 <template>
   <div class="engine-template-wrapper">
     <div
-      class="relative"
+      class="flat relative"
       v-for="(page, i) in pageData.pages"
       :key="i"
       :style="getCommonStyle(page.commonStyle)"
     >
       <!--页面内容区域-->
       <div
-        class="quark-page-wrapper"
+        class="h5-page-wrapper"
         :style="
           getCommonStyle(
             {
@@ -25,7 +25,9 @@
         <componentsTemplate
           v-for="(item, index) in page.elements"
           :key="index"
+          :loaded="item._loaded"
           @handleElementClick="handleElementClick"
+          :pageData="pageData"
           :element="item"
           :style="getCommonStyle(item.commonStyle, scalingRatio)"
         >
@@ -37,15 +39,14 @@
 
 <script>
 import editorProjectConfig from "@/pages/editor/DataModel";
-import componentsTemplate from "../../components/components-template";
-import $config from "@/config";
-import elementEvents from "@/mixins/elementEvents";
+import componentsTemplate from "./components-template";
+// import elementEvents from "@/mixins/elementEvents";
 export default {
   name: "engineH5Long",
   components: {
     componentsTemplate,
   },
-  mixins: [elementEvents],
+  // mixins: [elementEvents],
   data() {
     return {
       getCommonStyle: editorProjectConfig.getCommonStyle,
@@ -57,31 +58,40 @@ export default {
     };
   },
   created() {
-    this.pageData = window._pageData;
+    let pageData = window._pageData;
     // this.scalingRatio = document.body.clientWidth / $config.canvasH5Width;
     this.scalingRatio = document.body.clientWidth / pageData.width;
     this.pageTop =
       (document.documentElement.clientHeight -
-        this.pageData.height * this.scalingRatio) /
+        pageData.height * this.scalingRatio) /
       2;
     this.pageTop = Math.max(this.pageTop, 0);
+    this.pageData = pageData;
+    // this.pageData = window._pageData;
+    // // this.scalingRatio = document.body.clientWidth / $config.canvasH5Width;
+    // this.scalingRatio = document.body.clientWidth / pageData.width;
+    // this.pageTop =
+    //   (document.documentElement.clientHeight -
+    //     this.pageData.height * this.scalingRatio) /
+    //   2;
+    // this.pageTop = Math.max(this.pageTop, 0);
   },
   methods: {
-    /**
-     * 按钮点击事件
-     * @param eventsData
-     */
-    async handleElementClick(eventsData, element) {
-      for (let i = 0, len = eventsData.length; i < len; i++) {
-        if (this["_event_" + eventsData[i].type]) {
-          await this["_event_" + eventsData[i].type](
-            eventsData[i],
-            element,
-            this.pageData
-          );
-        }
-      }
-    },
+    // /**
+    //  * 按钮点击事件
+    //  * @param eventsData
+    //  */
+    // async handleElementClick(eventsData, element) {
+    //   for (let i = 0, len = eventsData.length; i < len; i++) {
+    //     if (this["_event_" + eventsData[i].type]) {
+    //       await this["_event_" + eventsData[i].type](
+    //         eventsData[i],
+    //         element,
+    //         this.pageData
+    //       );
+    //     }
+    //   }
+    // },
   },
 };
 </script>

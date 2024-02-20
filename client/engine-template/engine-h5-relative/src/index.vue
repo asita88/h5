@@ -8,7 +8,7 @@
     >
       <!--页面内容区域-->
       <div
-        class="quark-page-wrapper"
+        class="h5-page-wrapper"
         :style="
           getCommonStyle(
             {

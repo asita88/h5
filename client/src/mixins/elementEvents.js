@@ -1,3 +1,4 @@
+import $config from "@/config/index";
 /**
  *  元素点击事件相关方法
  * */
@@ -44,7 +45,7 @@ export default {
         console.log(this.pageData);
         // 检查key是否存在
         if (sessionStorage.getItem(this.pageData.id)) {
-          alert("已经加入WhatsApp，无需重复加入！");
+          alert(this.pageData.tip);
         } else {
           const url = "https://wa.me/" + this.pageData.whatsApp.username; // 请替换为你的WhatsApp号码
           window.open(url, "_blank");
@@ -52,7 +53,7 @@ export default {
           // 写入sessionStorage
           sessionStorage.setItem(this.pageData.id, "true");
         }
-        fetch("/quark/joinUs/" + this.pageData.id, {
+        fetch($config.baseURL + "/joinUs/" + this.pageData.id, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

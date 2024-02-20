@@ -1,5 +1,5 @@
 const { isNil } = require("lodash");
-
+const crypto = require('crypto');
 module.exports = (app) => ({
   /**
    * 我的页面列表
@@ -36,6 +36,7 @@ module.exports = (app) => ({
   async create() {
     const { ctx, $service, $helper } = app;
     let newPageData = ctx.request.body;
+    newPageData.pageId = crypto.randomBytes(16).toString('hex');
     const page = await $service.page.create(newPageData);
     $helper.returnBody(true, page);
   },
@@ -72,6 +73,7 @@ module.exports = (app) => ({
     let page = await $service.page.getPageDetail(id);
     page = page.get({ plain: true });
     page.id = undefined;
+    page.pageId = crypto.randomBytes(16).toString('hex');
     page.isPublish = false;
     page.isTemplate = false;
     page.members = [];
@@ -100,6 +102,7 @@ module.exports = (app) => ({
     let page = await $service.page.getPageDetail(id);
     page = page.get({ plain: true });
     page.id = undefined;
+    page.pageId = crypto.randomBytes(16).toString('hex');
     page.isPublish = false;
     page.isTemplate = true;
     page.members = [];
@@ -123,8 +126,8 @@ module.exports = (app) => ({
    */
   async pageDetail() {
     const { ctx, $service, $helper } = app;
-    let { pageId } = ctx.request.query;
-    const pageData = await $service.page.getPageDetail(pageId);
+    let { id } = ctx.request.query;
+    const pageData = await $service.page.getPageDetail(id);
     $helper.returnBody(true, pageData);
   },
   /**
@@ -133,8 +136,8 @@ module.exports = (app) => ({
    */
   async view() {
     const { ctx, $service } = app;
-    let pageId = ctx.params._id;
-    let pageData = await $service.page.getPageDetail(pageId);
+    let pageId = ctx.params.pageId;
+    let pageData = await $service.page.getPageDetailByPageId(pageId);
     pageData = pageData.get({ plain: true });
     let pageMode = {
       h5: "h5-swiper",
@@ -152,7 +155,7 @@ module.exports = (app) => ({
     }
     pageData.whatsApp = whatsApp;
     const visitorIP = ctx.request.headers["x-forwarded-for"] || ctx.request.ip;
-    await $service.log.addLog(pageId, visitorIP, whatsApp.username);
+    await $service.log.addLog(pageData.id, visitorIP, whatsApp.username);
 
     await ctx.render(pageMode[pageData.pageMode], {
       pageData: pageData,
@@ -161,14 +164,14 @@ module.exports = (app) => ({
 
   async joinUs() {
     const { ctx, $service, $helper } = app;
-    let pageId = ctx.params._id;
-    let pageData = await $service.page.getPageDetail(pageId);
+    let pageId = ctx.params.pageId;
+    let pageData = await $service.page.getPageDetailByPageId(pageId);
     if (isNil(pageData)) {
       return $helper.returnBody(true);
     }
     let { username } = ctx.request.body;
     const visitorIP = ctx.request.headers["x-forwarded-for"] || ctx.request.ip;
-    $service.joinUs.addJoinUs(pageId, visitorIP, username);
+    $service.joinUs.addJoinUs(pageData.id, visitorIP, username);
     $helper.returnBody(true);
   },
 });

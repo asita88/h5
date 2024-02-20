@@ -64,7 +64,7 @@
     <previewPage
       v-if="showPreview"
       :pageData="projectData"
-      :pageId="id"
+      :pageId="projectData.pageId"
       @closePreview="showPreview = false"
       @publishFn="publishFn"
       @saveFn="saveFn"
@@ -157,7 +157,7 @@ export default {
     initPageData() {
       this.loading = true;
       this.$API
-        .getPageDetail({ pageId: this.id })
+        .getPageDetail({ id: this.id })
         .then((res) => {
           this.loading = false;
           this.$store.dispatch("setPrjectData", {
